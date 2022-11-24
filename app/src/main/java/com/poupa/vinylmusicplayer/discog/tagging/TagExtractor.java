@@ -35,6 +35,10 @@ public class TagExtractor {
         try {return Integer.parseInt(safeGetTag.apply(tags, tag, String.valueOf(defaultValue)));}
         catch (NumberFormatException ignored) {return defaultValue;}
     };
+    private static final Func3Args<Tag, FieldKey, Float, Float> safeGetTagAsFloat = (tags, tag, defaultValue) -> {
+        try {return Float.parseFloat(safeGetTag.apply(tags, tag, String.valueOf(defaultValue)));}
+        catch (NumberFormatException ignored) {return defaultValue;}
+    };
     private static final Func3Args<Tag, FieldKey, Integer, Integer> safeGetTagAsReleaseYear = (tags, tag, defaultValue) -> {
         try {
             String tagValueAsText = safeGetTag.apply(tags, tag, "");
@@ -76,6 +80,9 @@ public class TagExtractor {
             ReplayGainTagExtractor.ReplayGainValues rgValues = ReplayGainTagExtractor.setReplayGainValues(file);
             song.replayGainAlbum = rgValues.album;
             song.replayGainTrack = rgValues.track;
+
+            song.BPM = safeGetTagAsFloat.apply(tags, FieldKey.BPM, song.BPM);
+
         } catch (@NonNull Exception | NoSuchMethodError | VerifyError e) {
             e.printStackTrace();
         }

@@ -37,6 +37,7 @@ public class Song implements Parcelable {
     public String title;
     public int trackNumber;
     public int year;
+    public float BPM = 0;
 
     public Song(long id, String title, int trackNumber, int year, long duration, String data, long dateAdded, long dateModified, long albumId, String albumName, long artistId, @NonNull List<String> artistNames) {
         this.id = id;
